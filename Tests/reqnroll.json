@@ -1,0 +1,8 @@
+{
+  "$schema": "https://reqnroll.net/reqnroll-default.json",
+  "language": { "feature": "en" },
+  "bindingCulture": { "language": "en" },
+  "execution": {
+    "threadCount": 2
+  }
+}

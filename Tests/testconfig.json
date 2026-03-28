@@ -1,0 +1,8 @@
+{
+  "BaseUrl": "https://www.saucedemo.com",
+  "Browsers": [ "chrome", "edge" ],
+  "BrowserOptions": [
+    "--start-maximized"
+  ],
+  "DefaultTimeoutSeconds": 10
+}
