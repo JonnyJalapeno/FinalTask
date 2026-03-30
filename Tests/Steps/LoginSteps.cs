@@ -15,11 +15,21 @@ namespace Tests.Steps
         private static readonly ILog log = LogManager.GetLogger(typeof(LoginSteps));
 
         private readonly FeatureContext featureContext;
-        private LoginPage loginPage = null!;
+        private LoginPage? loginPage;
 
         public LoginSteps(FeatureContext featureContext)
         {
             this.featureContext = featureContext;
+        }
+
+        private LoginPage LoginPage
+        {
+            get
+            {
+                var driver = featureContext.Get<IWebDriver>("Driver");
+                if (driver == null) throw new InvalidOperationException("Driver not initialized");
+                return loginPage ??= new LoginPage(driver);
+            }
         }
 
         [BeforeFeature]
@@ -65,42 +75,41 @@ namespace Tests.Steps
         {
             var driver = featureContext.Get<IWebDriver>("Driver");
             driver.Navigate().GoToUrl(TestConfig.Instance.BaseUrl);
-            loginPage = new LoginPage(driver);
             log.Info("[Step] Given — navigated to login page");
         }
 
         [When("I enter {string} and {string}")]
         public void WhenIEnterCredentials(string username, string password)
         {
-            loginPage.EnterAllCredentials(username, password);
+            LoginPage.EnterAllCredentials(username, password);
             log.Info($"[Step] When — entered username: {username}");
         }
 
         [When("I clear all credentials")]
         public void WhenIClearAllCredentials()
         {
-            loginPage.ClearAllCredentials();
+            LoginPage.ClearAllCredentials();
             log.Info("[Step] When — cleared all credentials");
         }
 
         [When("I clear the password")]
         public void WhenIClearThePassword()
         {
-            loginPage.ClearPassword();
+            LoginPage.ClearPassword();
             log.Info("[Step] When — cleared password");
         }
 
         [When("I click login")]
         public void WhenIClickLogin()
         {
-            loginPage.ClickLogin();
+            LoginPage.ClickLogin();
             log.Info("[Step] When — clicked login");
         }
 
         [Then("I should see error containing {string}")]
         public void ThenIShouldSeeErrorContaining(string expectedMessage)
         {
-            var error = loginPage.GetErrorMessage();
+            var error = LoginPage.GetErrorMessage();
             log.Info($"[Step] Then — error message: '{error}'");
             error.Should().Contain(expectedMessage);
         }

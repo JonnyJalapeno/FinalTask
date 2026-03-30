@@ -135,7 +135,7 @@ Returns the correct concrete factory based on `browser` string. The consumer onl
 
 ### Page Object Model — `BasePage`, `LoginPage`, `InventoryPage`
 All page interactions are encapsulated in page objects. Tests never call `FindElement` directly.
-`BasePage` provides shared `WebDriverWait` and `WaitForElement` helper. Each page validates itself in the constructor.
+`BasePage` provides shared `WebDriverWait` and `WaitForElement` helper.
 
 ---
 

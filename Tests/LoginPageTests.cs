@@ -15,13 +15,14 @@ namespace Tests
         private static readonly ILog log = LogManager.GetLogger(typeof(LoginPageTests));
         private readonly string browser;
         private readonly IWebDriver driver;
-        private LoginPage loginPage = null!;
+        private readonly LoginPage loginPage;
 
         public LoginPageTests(string browser)
         {
             this.browser = browser;
             log.Info($"Initializing {browser} driver");
             driver = DriverFactory.GetFactory(browser, TestConfig.Instance.BrowserOptions).CreateDriver();
+            this.loginPage = new LoginPage(driver);
             log.Info($"{browser} driver initialized successfully");
         }
 
@@ -39,7 +40,6 @@ namespace Tests
         {
             log.Info($"Navigating to saucedemo.com on {browser}");
             driver.Navigate().GoToUrl(TestConfig.Instance.BaseUrl);
-            loginPage = new LoginPage(driver);
             log.Info("LoginPage initialized");
         }
 
